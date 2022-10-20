@@ -1,7 +1,6 @@
 #include "../ft_printf_lib/include/ft_printf.h"
 #include <stdio.h>
 #include <stdlib.h>
-
 #include <signal.h>
 #include <sys/types.h>
 
@@ -18,5 +17,5 @@ int main(void)
     sa.sa_handler = &handle_sigtstp;
     sa.sa_flags = SA_RESTART;
     sigaction(SIGTSTP, &sa, NULL);
-    return 0;
+    return (0);
 }

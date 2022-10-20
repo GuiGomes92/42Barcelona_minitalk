@@ -1,8 +1,11 @@
 #include "../ft_printf_lib/include/ft_printf.h"
-#include <stdio.h>
-#include <unistd.h>
+#include <stdlib.h>
 
 int main(void)
 {
-    ft_printf("Infinite Loop\n");
+    int i;
+
+    i = getpid();
+    ft_printf("SERVER PID: %d\n", i);
+    return 0;
 }
