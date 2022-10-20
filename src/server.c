@@ -7,5 +7,9 @@ int main(void)
 
     i = getpid();
     ft_printf("SERVER PID: %d\n", i);
+    while (1)
+    {
+        pause();
+    }
     return 0;
 }
