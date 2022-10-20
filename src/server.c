@@ -9,6 +9,7 @@ void handle_sigusr1()
 
 int main(void)
 {
+    // Server has to print quickly the string sent by client
     int i;
     struct sigaction sa;
 

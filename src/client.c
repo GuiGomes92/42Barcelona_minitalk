@@ -13,6 +13,7 @@
 
 int main(int argc, char **argv)
 {
+    // Client takes server PID and String to send
     int pid = ft_atoi(argv[1]);
     if (argc == 2)
     {
