@@ -18,13 +18,7 @@ int main(int argc, char **argv)
     {
         ft_printf("%i", pid);
     }
-    kill(pid, SIGINT);
-
-    // Check later with other videos:
-    // struct sigaction sa;
-    // sa.sa_handler = &handle_sigtstp;
-    // sa.sa_flags = SA_RESTART;
-    // sigaction(SIGTSTP, &sa, NULL);
-
+    // kill(pid, SIGINT);
+    kill(pid, SIGUSR1);
     return (0);
 }
