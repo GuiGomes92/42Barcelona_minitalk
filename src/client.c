@@ -13,13 +13,20 @@
 
 int main(int argc, char **argv)
 {
-    // Client takes server PID and String to send
-    int pid = ft_atoi(argv[1]);
-    if (argc == 2)
+    if (argc == 3)
     {
-        ft_printf("%i", pid);
+        // Client takes server PID and String to send
+        int pid = ft_atoi(argv[1]);
+        if (argc == 2)
+        {
+            ft_printf("%i", pid);
+        }
+        // kill(pid, SIGINT);
+        kill(pid, SIGUSR1);
     }
-    // kill(pid, SIGINT);
-    kill(pid, SIGUSR1);
+    else
+    {
+        ft_printf("Wrong number of arguments!");
+    }
     return (0);
 }
