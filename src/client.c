@@ -1,5 +1,5 @@
-#include "../ft_printf_lib/include/ft_printf.h"
-#include "../ft_printf_lib/include/libft.h"
+#include "../printf/include/ft_printf.h"
+#include "../printf/include/libft.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>

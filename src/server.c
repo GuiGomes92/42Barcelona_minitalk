@@ -1,4 +1,4 @@
-#include "../ft_printf_lib/include/ft_printf.h"
+#include "../printf/include/ft_printf.h"
 #include <stdlib.h>
 #include <signal.h>
 
