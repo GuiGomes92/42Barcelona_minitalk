@@ -21,6 +21,7 @@ void handle_sigusr(int pid, char str)
     }
 }
 
+// Go over string
 void main_handler(int pid, char *str)
 {
     while (str)
