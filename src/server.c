@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include <signal.h>
 
-void handle_sigusr1()
-{
-    ft_printf("From Sigur");
-}
 
 int main(void)
 {
@@ -16,9 +12,9 @@ int main(void)
     i = getpid();
     ft_printf("SERVER PID: %d\n", i);
 
-    sa.sa_handler = &handle_sigusr1;
+    sa.sa_handler = &handle_sigusr;
     sa.sa_flags = SA_RESTART;
-    sigaction(SIGUSR1, &sa, NULL);
+    sigaction(SIGUSR2, &sa, NULL);
     while (1)
     {
         pause();
