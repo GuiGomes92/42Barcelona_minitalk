@@ -1,3 +1,6 @@
 [submodule "ft_printf_lib"]
 	path = ft_printf_lib
 	url = git@github.com:GuiGomes92/42Barcelona_ft_printf.git
+[submodule "printf"]
+	path = printf
+	url = https://github.com/GuiGomes92/42Barcelona_ft_printf.git
