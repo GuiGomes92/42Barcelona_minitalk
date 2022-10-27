@@ -2,6 +2,10 @@
 #include <stdlib.h>
 #include <signal.h>
 
+void handle_sigusr()
+{
+    ft_printf("%d\n", 1);
+}
 
 int main(void)
 {
@@ -14,7 +18,7 @@ int main(void)
 
     sa.sa_handler = &handle_sigusr;
     sa.sa_flags = SA_RESTART;
-    sigaction(SIGUSR2, &sa, NULL);
+    sigaction(SIGUSR1, &sa, NULL);
     while (1)
     {
         pause();

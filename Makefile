@@ -31,7 +31,7 @@ RM = /bin/rm -f
 CFLAGS = -Wall -Wextra -Werror
 CFLAGS_D = -Wall -Wextra -Werror -g 
 
-MYLIB_DIR	= 	ft_printf_lib
+MYLIB_DIR	= 	printf
 MYLIB		=	$(MYLIB_DIR)/libftprintf.a
 
 # ------------------------------ Messages ------------------------------

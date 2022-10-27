@@ -5,11 +5,31 @@
 #include <signal.h>
 #include <sys/types.h>
 
-// void handle_sigtstp(int sig)
-// {
-//      ft_printf("%d", sig);
-//      ft_printf("Stop not allowed\n");
-// }
+void handle_sigusr(int pid, char str)
+{
+    int i;
+
+    i = 0;
+    while(i < 8)
+    {
+        if(str & 0x80)
+        {
+            kill(pid, SIGUSR1);
+        }
+        i++;
+
+    }
+}
+
+void main_handler(int pid, char *str)
+{
+    while (str)
+    {
+        ft_printf("%c", str);
+        handle_sigusr(pid, *str);
+        str++;
+    }
+}
 
 int main(int argc, char **argv)
 {
@@ -17,9 +37,8 @@ int main(int argc, char **argv)
     {
         // Client takes server PID and String to send
         int pid = ft_atoi(argv[1]);
-            ft_printf("%i", pid);
-        // kill(pid, SIGINT);
-        kill(pid, SIGUSR1);
+        ft_printf("%i", pid);
+        main_handler(pid, argv[2]);
     }
     else
     {
