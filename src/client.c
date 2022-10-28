@@ -8,27 +8,25 @@
 void handle_sigusr(int pid, char str)
 {
     int i;
-
+    ft_printf("%c", str);
     i = 0;
-    while(i < 8)
+    while (i < 8)
     {
-        if(str & 0x80)
+        if (str & 0x80)
         {
             kill(pid, SIGUSR1);
         }
         i++;
-
     }
 }
 
 // Go over string
 void main_handler(int pid, char *str)
 {
-    while (str)
+    while (*str != '\0')
     {
-        ft_printf("%c", str);
         handle_sigusr(pid, *str);
-        str++;
+        ++str;
     }
 }
 
@@ -38,7 +36,6 @@ int main(int argc, char **argv)
     {
         // Client takes server PID and String to send
         int pid = ft_atoi(argv[1]);
-        ft_printf("%i", pid);
         main_handler(pid, argv[2]);
     }
     else
