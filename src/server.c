@@ -20,7 +20,7 @@ int main(void)
     ft_printf("SERVER PID: %d\n", i);
 
     sa.sa_handler = handle_sigusr;
-    // sa.sa_flags = SA_RESTART;
+    sa.sa_flags = SA_RESTART;
     sigaction(SIGUSR1, &sa, NULL);
     sigaction(SIGUSR2, &sa, NULL);
 
