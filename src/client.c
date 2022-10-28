@@ -8,17 +8,25 @@
 void handle_sigusr(int pid, char str)
 {
     int i;
-
+    ft_printf("%c:", str);
     i = 0;
     while (i < 8)
     {
         if (str & 0x80)
         {
-            kill(pid, SIGUSR2);
+            kill(pid, SIGUSR1);
+            ft_printf("0");
         }
+        else
+        {
+            kill(pid, SIGUSR2);
+            ft_printf("1");
+        }
+        usleep(3000);
         str <<= 1;
         i++;
     }
+    ft_printf("\n");
 }
 
 // Go over string
@@ -29,6 +37,7 @@ void main_handler(int pid, char *str)
         handle_sigusr(pid, *str);
         str++;
     }
+    ft_printf("\n");
 }
 
 int main(int argc, char **argv)

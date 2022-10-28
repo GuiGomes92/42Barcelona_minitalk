@@ -4,9 +4,10 @@
 
 void handle_sigusr(int signum)
 {
-    (void)signum;
-    ft_printf("%d\n", 1);
-    usleep(60);
+    if (signum == SIGUSR1)
+        ft_putint(0);
+    else
+        ft_putint(1);
 }
 
 int main(void)
@@ -18,13 +19,11 @@ int main(void)
     i = getpid();
     ft_printf("SERVER PID: %d\n", i);
 
-    sa.sa_handler = &handle_sigusr;
-    sa.sa_flags = SA_RESTART;
+    sa.sa_handler = handle_sigusr;
+    // sa.sa_flags = SA_RESTART;
+    sigaction(SIGUSR1, &sa, NULL);
     sigaction(SIGUSR2, &sa, NULL);
 
     while (1)
-    {
         pause();
-    }
-    return 0;
 }
