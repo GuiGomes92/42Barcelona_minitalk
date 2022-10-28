@@ -14,8 +14,10 @@ void handle_sigusr(int pid, char str)
     {
         if (str & 0x80)
         {
-            kill(pid, SIGINT);
+            kill(pid, SIGUSR1);
         }
+        pause();
+        str <<= 1;
         i++;
     }
 }
@@ -26,7 +28,7 @@ void main_handler(int pid, char *str)
     while (*str != '\0')
     {
         handle_sigusr(pid, *str);
-        ++str;
+        str++;
     }
 }
 

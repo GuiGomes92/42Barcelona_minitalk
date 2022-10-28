@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <signal.h>
 
-void handle_sigusr()
+void handle_sigusr(int signum)
 {
+    (void)signum;
     ft_printf("%d\n", 1);
+    usleep(60);
 }
 
 int main(void)
@@ -19,6 +21,7 @@ int main(void)
     sa.sa_handler = &handle_sigusr;
     sa.sa_flags = SA_RESTART;
     sigaction(SIGUSR1, &sa, NULL);
+
     while (1)
     {
         pause();
