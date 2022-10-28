@@ -14,9 +14,8 @@ void handle_sigusr(int pid, char str)
     {
         if (str & 0x80)
         {
-            kill(pid, SIGUSR1);
+            kill(pid, SIGUSR2);
         }
-        pause();
         str <<= 1;
         i++;
     }
