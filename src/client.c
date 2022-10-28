@@ -8,13 +8,13 @@
 void handle_sigusr(int pid, char str)
 {
     int i;
-    ft_printf("%c", str);
+
     i = 0;
     while (i < 8)
     {
         if (str & 0x80)
         {
-            kill(pid, SIGUSR1);
+            kill(pid, SIGINT);
         }
         i++;
     }
