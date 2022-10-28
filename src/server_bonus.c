@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   server.c                                           :+:      :+:    :+:   */
+/*   server_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -24,14 +24,25 @@ static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 {
     static unsigned char c;
 
-    (void)info;
     (void)ucontext;
+    usleep(100);
     if (signum == SIGUSR1)
+    {
         c |= 1;
+        kill(info->si_pid, SIGUSR2);
+    }
+    if (signum == SIGUSR2)
+    {
+        kill(info->si_pid, SIGUSR2);
+    }
     g_count++;
     if(g_count == 8)
     {
         ft_putchar_fd(c, 1);
+        if (c == '\0')
+         {
+            kill(info->si_pid, SIGUSR1);
+        }
         g_count = 0;
     }
     c <<= 1;

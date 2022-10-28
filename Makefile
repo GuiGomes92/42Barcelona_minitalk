@@ -19,12 +19,21 @@ WHITE = \033[0;97m
 SERVER = server
 CLIENT = client
 
+SERVER_BONUS = server_bonus
+CLIENT_BONUS = client_bonus
+
 SRCS 		= src/
 CLIENT_SRCS = ${SRCS}client.c
 SERVER_SRCS = ${SRCS}server.c
 
+CLIENT_SRCS_BONUS = ${SRCS}client_bonus.c
+SERVER_SRCS_BONUS = ${SRCS}server_bonus.c
+
 CLIENT_OBJS = ${SRCS}client.o
 SERVER_OBJS = ${SRCS}server.o
+
+CLIENT_OBJS_BONUS = ${SRCS}client_bonus.o
+SERVER_OBJS_BONUS = ${SRCS}server_bonus.o
 
 CC = gcc
 RM = /bin/rm -f
@@ -53,19 +62,35 @@ all:
 	@Make -s $(CLIENT)
 	@$(CLI_READY)
 
+bonus: 
+	@Make libs
+	@echo "\n🚧 $(YELLOW)Compiling Server..$(NO_COLOR)"	
+	@Make -s $(SERVER_BONUS)
+	@$(SERV_READY)	
+	@echo "\n🚧 $(YELLOW)Compiling Client..$(NO_COLOR)"	
+	@Make -s $(CLIENT_BONUS)
+	@$(CLI_READY)
+
 libs:
 	@echo "\n$(GRAY)➖➖➖➖➖    LIBS    ➖➖➖➖➖➖$(NO_COLOR)\n"
 	@$(MAKE) -C $(MYLIB_DIR)
 	@echo "\n$(GRAY)➖➖➖➖➖ LIBS  DONE ➖➖➖➖➖➖➖➖➖$(NO_COLOR)\n"	
 
 $(SERVER): $(SERVER_OBJS) $(MYLIB) Makefile
-	@echo "🍕 $(WHITE)$(CC) $(CFLAGS) $(SERVER_OBJS) $(MYLIB) -o $(CLIENT)$(DEF_COLOR)"
+	@echo "🍕 $(WHITE)$(CC) $(CFLAGS) $(SERVER_OBJS) $(MYLIB) -o $(SERVER)$(DEF_COLOR)"
 	@$(CC) $(CFLAGS) $(SERVER_OBJS) $(MYLIB) -o $(SERVER)
 
+$(SERVER_BONUS): $(SERVER_OBJS_BONUS) $(MYLIB) Makefile
+	@echo "🍕 $(WHITE)$(CC) $(CFLAGS) $(SERVER_OBJS_BONUS) $(MYLIB) -o $(SERVER_BONUS)$(DEF_COLOR)"
+	@$(CC) $(CFLAGS) $(SERVER_OBJS_BONUS) $(MYLIB) -o $(SERVER_BONUS)
 
 $(CLIENT): $(CLIENT_OBJS) $(MYLIB) Makefile
 	@echo "🍕 $(WHITE)$(CC) $(CFLAGS) $(CLIENT_OBJS) $(MYLIB) -o $(CLIENT)$(DEF_COLOR)"
 	@$(CC) $(CFLAGS) $(CLIENT_OBJS) $(MYLIB) -o $(CLIENT)
+
+$(CLIENT_BONUS): $(CLIENT_OBJS_BONUS) $(MYLIB) Makefile
+	@echo "🍕 $(WHITE)$(CC) $(CFLAGS) $(CLIENT_OBJS) $(MYLIB) -o $(CLIENT_BONUS)$(DEF_COLOR)"
+	@$(CC) $(CFLAGS) $(CLIENT_OBJS_BONUS) $(MYLIB) -o $(CLIENT_BONUS)
 
 $(SRCS)%.o:$(SRCS)%.c
 	@${CC} ${CFLAGS} -c $< -o $@
@@ -73,17 +98,14 @@ $(SRCS)%.o:$(SRCS)%.c
 
 clean:
 	@$(MAKE) clean -C $(MYLIB_DIR)
-	@$(RM) $(SERVER_OBJS) $(CLIENT_OBJS)
+	@$(RM) $(SERVER_OBJS) $(CLIENT_OBJS) $(SERVER_OBJS_BONUS) $(CLIENT_OBJS_BONUS)
 	@echo "$(MAGENTA)🚽 Cleaned $(SERVER) & $(CLIENT)$(DEF_COLOR)"
 
 fclean: clean
 	@$(MAKE) fclean -C $(MYLIB_DIR)
-	@$(RM) $(SERVER) $(CLIENT)
+	@$(RM) $(SERVER) $(CLIENT) $(SERVER_BONUS) $(CLIENT_BONUS)
 	@echo "$(MAGENTA)🚽 Fcleaned $(SERVER) & $(CLIENT)$(DEF_COLOR)"	
 
 re: fclean all
-
-bonus: 
-	@$(MAKE) all
 
 .PHONY: all clean fclean re bonus
