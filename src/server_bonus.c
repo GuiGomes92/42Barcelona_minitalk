@@ -14,17 +14,13 @@
 #include <stdlib.h>
 #include <signal.h>
 
-//TODO:
-// Protect writes and kills
-// Bonus: duplicate files and change it so client receives the bytes that were sent
-
 int g_count;
 
 static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 {
     static unsigned char c;
-
     (void)ucontext;
+
     usleep(100);
     if (signum == SIGUSR1)
     {
@@ -36,11 +32,11 @@ static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
         kill(info->si_pid, SIGUSR2);
     }
     g_count++;
-    if(g_count == 8)
+    if (g_count == 8)
     {
         ft_putchar_fd(c, 1);
         if (c == '\0')
-         {
+        {
             kill(info->si_pid, SIGUSR1);
         }
         g_count = 0;
@@ -50,7 +46,6 @@ static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 
 int main(void)
 {
-    // Server has to print quickly the string sent by client
     int i;
     struct sigaction sa;
 
