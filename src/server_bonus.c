@@ -18,8 +18,8 @@ int g_count;
 
 static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 {
-    static unsigned char c;
-    (void)ucontext;
+    static unsigned char    c;
+    (void)                  ucontext;
 
     usleep(100);
     if (signum == SIGUSR1)
@@ -46,8 +46,8 @@ static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 
 int main(void)
 {
-    int i;
-    struct sigaction sa;
+    int                 i;
+    struct sigaction    sa;
 
     g_count = 0;
     i = getpid();
