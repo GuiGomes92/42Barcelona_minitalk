@@ -47,7 +47,7 @@ void handle_sigusr(int pid, char str)
         else
             signal = SIGUSR2;
         kill_response = kill(pid, signal);
-        usleep(200);
+        usleep(300);
         if (kill_response < 0)
             exit (-1);
         usleep(300);
