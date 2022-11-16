@@ -6,7 +6,7 @@
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:46:45 by gbraga-g          #+#    #+#             */
-/*   Updated: 2022/10/28 19:46:48 by gbraga-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 19:46:36 by gbraga-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,51 @@
 #include <signal.h>
 #include <sys/types.h>
 
-void handle_sigusr(int pid, char str)
+void	handle_sigusr(int pid, char str)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    while (i < 8)
-    {
-        if (str & 0x80)
-        {
-            kill(pid, SIGUSR1);
-        }
-        else
-        {
-            kill(pid, SIGUSR2);
-        }
-        usleep(300);
-        str <<= 1;
-        i++;
-    }
+	i = 0;
+	while (i < 8)
+	{
+		if (str & 0x80)
+		{
+			kill(pid, SIGUSR1);
+		}
+		else
+		{
+			kill(pid, SIGUSR2);
+		}
+		usleep(300);
+		str <<= 1;
+		i++;
+	}
 }
 
-// Go over string
-void main_handler(int pid, char *str)
+void	main_handler(int pid, char *str)
 {
-    while (*str != '\0')
-    {
-        handle_sigusr(pid, *str);
-        str++;
-    }
-    handle_sigusr(pid, '\0');
-    ft_printf("\n");
+	while (*str != '\0')
+	{
+		handle_sigusr(pid, *str);
+		str++;
+	}
+	handle_sigusr(pid, '\0');
+	ft_printf("\n");
 }
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
-    if (argc == 3)
-    {
-        // Client takes server PID and String to send
-        int pid = ft_atoi(argv[1]);
-        main_handler(pid, argv[2]);
-    }
-    else
-    {
-        ft_printf("Wrong number of arguments!");
-        exit(0);
-    }
-    return (0);
+	int	pid;
+
+	if (argc == 3)
+	{
+		pid = ft_atoi(argv[1]);
+		main_handler(pid, argv[2]);
+	}
+	else
+	{
+		ft_printf("Wrong number of arguments!");
+		exit(0);
+	}
+	return (0);
 }

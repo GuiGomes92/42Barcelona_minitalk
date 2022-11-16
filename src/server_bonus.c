@@ -6,7 +6,7 @@
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:44:44 by gbraga-g          #+#    #+#             */
-/*   Updated: 2022/10/28 19:44:48 by gbraga-g         ###   ########.fr       */
+/*   Updated: 2022/11/16 20:01:07 by gbraga-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,49 +14,49 @@
 #include <stdlib.h>
 #include <signal.h>
 
-int g_count;
+int	g_count;
 
-static void handle_sigusr(int signum, siginfo_t *info, void *ucontext)
+static void	handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 {
-    static unsigned char    c;
-    (void)                  ucontext;
+	static unsigned char	c;
 
-    usleep(100);
-    if (signum == SIGUSR1)
-    {
-        c |= 1;
-        kill(info->si_pid, SIGUSR2);
-    }
-    if (signum == SIGUSR2)
-    {
-        kill(info->si_pid, SIGUSR2);
-    }
-    g_count++;
-    if (g_count == 8)
-    {
-        ft_putchar_fd(c, 1);
-        if (c == '\0')
-        {
-            kill(info->si_pid, SIGUSR1);
-        }
-        g_count = 0;
-    }
-    c <<= 1;
+	(void) ucontext;
+	usleep(100);
+	if (signum == SIGUSR1)
+	{
+		c |= 1;
+		kill(info->si_pid, SIGUSR2);
+	}
+	if (signum == SIGUSR2)
+	{
+		kill(info->si_pid, SIGUSR2);
+	}
+	g_count++;
+	if (g_count == 8)
+	{
+		ft_putchar_fd(c, 1);
+		if (c == '\0')
+		{
+			kill(info->si_pid, SIGUSR1);
+		}
+		g_count = 0;
+	}
+	c <<= 1;
 }
 
-int main(void)
+int	main(void)
 {
-    int                 i;
-    struct sigaction    sa;
+	int					i;
+	struct sigaction	sa;
 
-    g_count = 0;
-    i = getpid();
-    ft_printf("SERVER PID: %d\n", i);
-    sa.sa_sigaction = handle_sigusr;
-    sa.sa_flags = SA_RESTART;
-    sigaction(SIGUSR1, &sa, NULL);
-    sigaction(SIGUSR2, &sa, NULL);
-    while (1)
-        pause();
-    return (0);
+	g_count = 0;
+	i = getpid();
+	ft_printf("SERVER PID: %d\n", i);
+	sa.sa_sigaction = handle_sigusr;
+	sa.sa_flags = SA_RESTART;
+	sigaction(SIGUSR1, &sa, NULL);
+	sigaction(SIGUSR2, &sa, NULL);
+	while (1)
+		pause();
+	return (0);
 }
