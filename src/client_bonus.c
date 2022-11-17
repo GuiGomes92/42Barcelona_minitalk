@@ -6,7 +6,7 @@
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:46:45 by gbraga-g          #+#    #+#             */
-/*   Updated: 2022/11/16 19:51:40 by gbraga-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:03:48 by gbraga-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,9 @@ void	handle_sigusr(int pid, char str)
 		else
 			signal = SIGUSR2;
 		kill_response = kill(pid, signal);
-		usleep(300);
+		pause();
 		if (kill_response < 0)
 			exit (-1);
-		usleep(300);
 		str <<= 1;
 		i++;
 	}
@@ -73,11 +72,13 @@ int	main(int argc, char **argv)
 			i++;
 		}
 		handle_sigusr(pid, '\0');
-		ft_printf("\n");
+		if (ft_printf("\n") == -1)
+			exit (-1);
 	}
 	else
 	{
-		ft_printf("Wrong number of arguments!");
+		if (ft_printf("Wrong number of arguments!") == -1)
+			exit (-1);
 		exit(0);
 	}
 	while (1)

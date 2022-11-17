@@ -6,7 +6,7 @@
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:46:45 by gbraga-g          #+#    #+#             */
-/*   Updated: 2022/11/16 19:46:36 by gbraga-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:01:45 by gbraga-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,13 @@ void	handle_sigusr(int pid, char str)
 	{
 		if (str & 0x80)
 		{
-			kill(pid, SIGUSR1);
+			if (kill(pid, SIGUSR1) < 0)
+				exit(-1);
 		}
 		else
 		{
-			kill(pid, SIGUSR2);
+			if (kill(pid, SIGUSR2) < 0)
+				exit(-1);
 		}
 		usleep(300);
 		str <<= 1;
@@ -46,7 +48,8 @@ void	main_handler(int pid, char *str)
 		str++;
 	}
 	handle_sigusr(pid, '\0');
-	ft_printf("\n");
+	if (ft_printf("\n") == -1)
+		exit (-1);
 }
 
 int	main(int argc, char **argv)
@@ -60,7 +63,8 @@ int	main(int argc, char **argv)
 	}
 	else
 	{
-		ft_printf("Wrong number of arguments!");
+		if (ft_printf("Wrong number of arguments!") == -1)
+			exit (-1);
 		exit(0);
 	}
 	return (0);

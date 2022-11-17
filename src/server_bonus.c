@@ -6,7 +6,7 @@
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:44:44 by gbraga-g          #+#    #+#             */
-/*   Updated: 2022/11/16 20:01:07 by gbraga-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:05:47 by gbraga-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,23 @@ static void	handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 	if (signum == SIGUSR1)
 	{
 		c |= 1;
-		kill(info->si_pid, SIGUSR2);
+		if (kill(info->si_pid, SIGUSR2) < 0)
+			exit (-1);
 	}
 	if (signum == SIGUSR2)
 	{
-		kill(info->si_pid, SIGUSR2);
+		if (kill(info->si_pid, SIGUSR2) < 0)
+			exit (-1);
 	}
 	g_count++;
 	if (g_count == 8)
 	{
-		ft_putchar_fd(c, 1);
+		if (write(1, &c, 1) == -1)
+			exit(-1);
 		if (c == '\0')
 		{
-			kill(info->si_pid, SIGUSR1);
+			if (kill(info->si_pid, SIGUSR1) < 0)
+				exit (-1);
 		}
 		g_count = 0;
 	}
@@ -51,7 +55,8 @@ int	main(void)
 
 	g_count = 0;
 	i = getpid();
-	ft_printf("SERVER PID: %d\n", i);
+	if (ft_printf("SERVER PID: %d\n", i) == -1)
+		exit(-1);
 	sa.sa_sigaction = handle_sigusr;
 	sa.sa_flags = SA_RESTART;
 	sigaction(SIGUSR1, &sa, NULL);
