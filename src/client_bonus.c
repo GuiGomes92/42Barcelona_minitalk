@@ -6,7 +6,7 @@
 /*   By: gbraga-g <gbraga-g@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/28 19:46:45 by gbraga-g          #+#    #+#             */
-/*   Updated: 2022/11/17 20:03:48 by gbraga-g         ###   ########.fr       */
+/*   Updated: 2022/11/17 20:31:44 by gbraga-g         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,7 @@ int	main(int argc, char **argv)
 			exit (-1);
 	}
 	else
-	{
-		if (ft_printf("Wrong number of arguments!") == -1)
-			exit (-1);
-		exit(0);
-	}
+		exit(ft_printf("Wrong number of arguments!"));
 	while (1)
 		pause();
 	return (0);
