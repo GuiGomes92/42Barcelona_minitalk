@@ -19,32 +19,26 @@ int	g_count;
 static void	handle_sigusr(int signum, siginfo_t *info, void *ucontext)
 {
 	static unsigned char	c;
+	int						kill_response;
 
 	(void) ucontext;
 	usleep(100);
 	if (signum == SIGUSR1)
-	{
 		c |= 1;
-		if (kill(info->si_pid, SIGUSR2) < 0)
-			exit (-1);
-	}
+		kill_response = kill(info->si_pid, SIGUSR2);
 	if (signum == SIGUSR2)
-	{
-		if (kill(info->si_pid, SIGUSR2) < 0)
-			exit (-1);
-	}
+		kill_response = kill(info->si_pid, SIGUSR2);
 	g_count++;
 	if (g_count == 8)
 	{
 		if (write(1, &c, 1) == -1)
 			exit(-1);
 		if (c == '\0')
-		{
-			if (kill(info->si_pid, SIGUSR1) < 0)
-				exit (-1);
-		}
+			kill_response = kill(info->si_pid, SIGUSR1);
 		g_count = 0;
 	}
+	if (kill_response < 0)
+		exit (-1);
 	c <<= 1;
 }
 
